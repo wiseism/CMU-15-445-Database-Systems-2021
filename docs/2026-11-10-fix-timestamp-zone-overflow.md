@@ -17,3 +17,8 @@ src/type/timestamp_type.cpp:129:18: error: '%02d' directive writing between 2 an
 ## 修复
 
 `char zone[5]` → `char zone[8]`（同时清理旁边的注释掉的 zone[7] 行）。
+
+
+## 二次修正
+
+zone[5]→zone[8] 仍被 gcc -Wformat-overflow 命中（%02d 理论最大写入 2–10 字节 > 8），改为 `snprintf(zone, sizeof(zone), "%02d", tz)`，语义与长度上限都由 sizeof 保证，告警彻底关闭。
