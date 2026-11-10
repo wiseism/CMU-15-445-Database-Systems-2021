@@ -22,3 +22,8 @@ src/type/timestamp_type.cpp:129:18: error: '%02d' directive writing between 2 an
 ## 二次修正
 
 zone[5]→zone[8] 仍被 gcc -Wformat-overflow 命中（%02d 理论最大写入 2–10 字节 > 8），改为 `snprintf(zone, sizeof(zone), "%02d", tz)`，语义与长度上限都由 sizeof 保证，告警彻底关闭。
+
+
+## 三次修正
+
+gcc 对 `snprintf(zone[8], "%02d", tz)` 也报 `-Wformat-truncation`（int 最宽 10 字节 > 8）。把 buffer 再扩为 `char zone[16]`（>= 11 即可容纳 int 最坏宽度 + NUL），两处告警（overflow/truncation）同时满足。
