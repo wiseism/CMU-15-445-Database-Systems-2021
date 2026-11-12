@@ -20,3 +20,8 @@ workflow 是 2021 年 BusTub 课程模板，早已不适配当前 runner：
 - 依赖安装不再走 18/20.04-only 的 packages.sh，改用 apt 直接安装 `clang/clang-format/clang-tidy/cmake/zlib1g-dev`；
 - Configure 时 `CC/CXX` 指向 runner 自带编译器，`CLANG_FORMAT_BIN/CLANG_TIDY_BIN` 指向系统 clang-format/clang-tidy（CMakeLists 找不到时仅告警，不影响构建）；
 - 保留完整 Configure + Build（含 gtest 测试目标构建）。
+
+## 验证记录
+| Run | 结果 |
+|---|---|
+| 42838489741 (dev) | ✅ success |
